@@ -8,16 +8,18 @@ from urllib.parse import urljoin
 import requests
 
 
-def search(query):
-    api_url = 'https://pypi.org/search/'
+def search(query, api_url='https://pypi.org/search/'):
     snippets = []
+    s = requests.Session()
     for page in range(1, 3):
         params = {'q': query, 'page': page}
-        r = requests.get(api_url, params=params)
+        r = s.get(api_url, params=params)
         soup = BeautifulSoup(r.text, 'html5lib')
         snippets += soup.select('a[class*="snippet"]')
+        if not hasattr(s, 'start_url'):
+            s.start_url = r.url
 
-    table = Table(title='[not italic]:snake:[/] [bold][magenta]{} [not italic]:snake:[/]'.format(r.url), expand=True)
+    table = Table(title=f'[not italic]:snake:[/] [bold][magenta]{s.start_url} [not italic]:snake:[/]')
     table.add_column('Package', style='cyan', no_wrap=True)
     table.add_column('Version', style='bold yellow')
     table.add_column('Released', style='bold green')
