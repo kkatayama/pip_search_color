@@ -1,2 +1,2 @@
-# pip_search_color
+# pip-search-color
 Wrapper for "pip search" with color and hyperlink features.
