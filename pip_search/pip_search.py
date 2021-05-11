@@ -2,7 +2,7 @@
 
 from rich.console import Console
 from rich.table import Table
-from rich.padding import Padding
+from rich.markup import escape
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import requests
@@ -17,7 +17,7 @@ def search(query, api_url='https://pypi.org/search/'):
         soup = BeautifulSoup(r.text, 'html5lib')
         snippets += soup.select('a[class*="snippet"]')
         if not hasattr(s, 'start_url'):
-            s.start_url = r.url
+            s.base_url = r.url.rsplit('&page', maxsplit=1).pop(0)
 
     table = Table(title=f'[not italic]:snake:[/] [bold][magenta]{s.start_url} [not italic]:snake:[/]')
     table.add_column('Package', style='cyan', no_wrap=True)
@@ -30,7 +30,8 @@ def search(query, api_url='https://pypi.org/search/'):
         version = snippet.select_one('span[class*="version"]').text.strip()
         released = snippet.select_one('span[class*="released"]').text.strip()
         description = snippet.select_one('p[class*="description"]').text.strip()
-        table.add_row(f'[link={link}]{package}[/link]', version, released, description)
+        emoji = ':open_file_folder:'
+        table.add_row(f'[link={link}]{emoji}[/link] {package}', version, released, description)
 
     console = Console()
     console.print(table)
