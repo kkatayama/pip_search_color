@@ -17,6 +17,7 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/kkatayama/pip_search',
     packages=find_packages(exclude=("tests",)),
+    include_package_data=True,
     install_requires=["rich", "bs4", "requests"],
     entry_points={
         'console_scripts': [

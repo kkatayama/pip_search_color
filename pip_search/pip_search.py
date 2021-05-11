@@ -1,3 +1,5 @@
+# pip_search.py
+
 from rich.console import Console
 from rich.table import Table
 from bs4 import BeautifulSoup

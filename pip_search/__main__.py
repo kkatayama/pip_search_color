@@ -1,3 +1,4 @@
+# __main__.py
 '''
 usage: pypi_search.py [-h] query
 
