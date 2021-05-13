@@ -23,8 +23,8 @@ def check_positive(pages: int):
 def main():
     pretty.install()
     ap = argparse.ArgumentParser()
-    ap.add_argument('-p', '--pages', type=check_positive, required=False,
-                    help='number of page results to display [default=1]')
+    ap.add_argument('-p', '--pages', type=check_positive, required=False, default=2,
+                    help='number of page results to display [default=2]')
     ap.add_argument('query', nargs='+', type=str,
                     help='terms to search pypi.org package repository')
     args = ap.parse_args()
