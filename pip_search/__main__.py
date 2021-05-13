@@ -10,13 +10,25 @@ optional arguments:
 '''
 import sys
 import argparse
+from rich import install
 from pip_search.pip_search import search
 
+
+def check_positive(pages: int):
+    if int(pages) < 1:
+        raise argparse.ArgumentTypeError(f'[red]{pages}[/red] is an invalid value for pages')
+    return int(pages)
+
+
 def main():
+    install()
     ap = argparse.ArgumentParser()
-    ap.add_argument('query', help='terms to search pypi.org package repository') 
+    ap.add_argument('-p', '--pages', type=check_positive, required=False,
+                    help='number of page results to display [default=1]')
+    ap.add_argument('query', nargs='+', type=str,
+                    help='terms to search pypi.org package repository')
     args = ap.parse_args()
-    search(args.query)
+    search(query=' '.join(args.query), pages=args.pages)
 
 
 if __name__ == '__main__':
