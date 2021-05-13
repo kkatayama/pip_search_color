@@ -10,7 +10,7 @@ optional arguments:
 '''
 import sys
 import argparse
-from rich import install
+from rich import pretty
 from pip_search.pip_search import search
 
 
@@ -21,7 +21,7 @@ def check_positive(pages: int):
 
 
 def main():
-    install()
+    pretty.install()
     ap = argparse.ArgumentParser()
     ap.add_argument('-p', '--pages', type=check_positive, required=False,
                     help='number of page results to display [default=1]')
